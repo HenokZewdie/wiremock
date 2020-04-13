@@ -1,0 +1,17 @@
+{
+	"request":{
+		"method": "GET",
+		"url": "/getDataFromSubscription"
+	},
+	
+	"response": {
+		"status": 200,
+		"jsonBody": {
+	"EnrollmentId": 1,
+	"userId": "817a2a40-838b-11e8-a14b-115b12bf7517",
+	"accountId": 10,
+	"accountType": "accountType"
+
+}
+}
+}

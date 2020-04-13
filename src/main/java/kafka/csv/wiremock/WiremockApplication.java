@@ -9,7 +9,12 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class WiremockApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WiremockApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WiremockApplication.class, args);
+    }
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+
+    }
 }

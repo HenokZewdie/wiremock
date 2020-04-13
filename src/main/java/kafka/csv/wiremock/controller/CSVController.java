@@ -13,11 +13,11 @@ import kafka.csv.wiremock.csv.CsvSave;
 import kafka.csv.wiremock.repo.CsvRepo;
 
 @RestController
-public class MainController {
+public class CSVController {
 
 	private final CsvRepo csvRepo;
 
-	public MainController(CsvRepo csvRepo) {
+	public CSVController(CsvRepo csvRepo) {
 		this.csvRepo = csvRepo;
 	}
 

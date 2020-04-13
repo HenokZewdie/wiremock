@@ -19,7 +19,7 @@ import cucumber.api.junit.Cucumber;
 //@EnableConfigurationProperties
 //@ContextConfiguration
 
-public class FunctionalTestWithWiremock {
+public class FunctionalTestWithWiremockRunner {
     private static WireMockServer mockServer;
 
     @BeforeClass
