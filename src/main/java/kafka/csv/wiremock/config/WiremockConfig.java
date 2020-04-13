@@ -1,6 +1,5 @@
 package kafka.csv.wiremock.config;
 
-
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import org.springframework.context.annotation.Bean;
