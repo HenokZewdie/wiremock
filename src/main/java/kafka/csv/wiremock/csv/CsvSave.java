@@ -10,7 +10,6 @@ import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -20,7 +19,11 @@ import kafka.csv.wiremock.repo.CsvRepo;
 public class CsvSave {
 
 	@Autowired
-	private CsvRepo csvRepo;
+	private final CsvRepo csvRepo;
+
+	public CsvSave(CsvRepo csvRepo) {
+		this.csvRepo = csvRepo;
+	}
 
 	public void readCsvFile() throws IOException {
 		try (Reader reader = newBufferedReader(Paths.get(new ClassPathResource("sample.csv").getFile().toString()))){
