@@ -1,0 +1,13 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/wiremock/getperson"
+	},
+	"response": {
+		"status": 200,
+		"jsonBody": {
+			"name": "Mena",
+			"age": 6
+		}
+	}
+}
