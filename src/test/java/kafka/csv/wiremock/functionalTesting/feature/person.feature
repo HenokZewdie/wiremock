@@ -9,5 +9,4 @@ Feature: Check person DB
 
     Examples:
       | status | is saved |
-      | 200    | saved     |
-      | 200    |saved      |
+      | 200    | saved    |

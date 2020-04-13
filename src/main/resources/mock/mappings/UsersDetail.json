@@ -1,0 +1,62 @@
+{
+	"request":{
+		"method": "GET",
+		"url": "/users/getUserInformation"
+	},
+	
+	"response": {
+		"status": 200,
+		"jsonBody": {
+	"size": 1,
+	"offset": 0,
+	"limit": 10,
+	"results": [
+    {
+      "userId": "817a2a40-838b-11e8-a14b-115b12bf7517",
+      "firstName": "jane",
+      "middleName": "janice",
+      "lastName": "doe",
+      "title": "ms.",
+      "nameSuffix": "jr.",
+      "phones": [
+        {
+          "number": "+12345678900",	
+          "type": "home"
+        },
+        {
+          "number": "+12345678901",
+          "type": "work",
+          "extension": "1234"
+        },
+        {
+          "number": "+12345678921",
+          "type": "mobile"
+        }
+      ],
+      "emailAddress": "sample@gmail.com",
+      "preferredLanguage": "en-US",
+      "addresses": [
+        {
+          "line1": "3909 Woodward Ave",
+          "line2": "Apt 4",
+          "city": "Detroit",
+          "stateOrProvince": "MI",
+          "country": "US",
+          "postalCode": 48201,
+          "type": "home"
+        },
+        {
+          "line1": "3909 Woodward Ave",
+          "line2": "Apt 4",
+          "city": "Detroit",
+          "stateOrProvince": "MI",
+          "country": "US",
+          "postalCode": 48201,
+          "type": "mailing"
+        }
+      ]
+    }
+  ]
+}
+}
+}
