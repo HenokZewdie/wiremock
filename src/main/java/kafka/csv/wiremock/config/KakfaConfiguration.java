@@ -80,6 +80,7 @@ public class KakfaConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, SubscriptionAndUserDetailsToStoreIntoTheDB> userKafkaListenerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, SubscriptionAndUserDetailsToStoreIntoTheDB> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(userConsumerFactory());
+
         return factory;
     }
 

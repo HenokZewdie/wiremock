@@ -20,13 +20,17 @@ public class KafkaController {
 	private static final String TOPIC = "GreatExample";
 
 	@Autowired
-	private KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate;
+	private final KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate;
 
 	@Autowired
 	AccountBillingService service;
 
 	@Autowired
 	MongoTemplate mongoTemplate;
+
+	public KafkaController(KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate) {
+		this.kafkaTemplate = kafkaTemplate;
+	}
 
 	@RequestMapping(value = "/getUsersDetails", method = RequestMethod.GET)
 	public SubscriptionAndUserDetailsToStoreIntoTheDB getAllUser() throws JsonParseException, JsonMappingException, IOException {
@@ -43,8 +47,8 @@ public class KafkaController {
 		return detailsToStoreIntoTheDB;
 	}
 
-	//TODO ... instead of calling the api, pass the SubscriptionAndUserDetailsToStoreIntoTheDB to the method to publish
-	@RequestMapping(value = "/publish", method = RequestMethod.GET)
+	//TODO ... instead of calling the api, pass the SubscriptionAndUserDetailsToStoreIntoTheDB to this method to publish
+	//@RequestMapping(value = "/publish", method = RequestMethod.GET)
 	public void  post(SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB) throws JsonParseException, JsonMappingException, IOException {
 		//No need to use the next line if SubscriptionAndUserDetailsToStoreIntoTheDB is passed
 		//SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB = service.getUsersDetails(userId);
@@ -52,7 +56,7 @@ public class KafkaController {
 		//return detailsToStoreIntoTheDB;
 	}
 
-	@KafkaListener(topics = TOPIC, groupId = "group_json",
+	@KafkaListener(topics = TOPIC ,groupId = "group_json",
 			containerFactory = "userKafkaListenerFactory")
 	public void consumeJson(SubscriptionAndUserDetailsToStoreIntoTheDB  subscriptionAndUserDetailsToStoreIntoTheDB)
 			throws JsonParseException, JsonMappingException, IOException {
@@ -61,5 +65,4 @@ public class KafkaController {
 		mongoTemplate.save(subscriptionAndUserDetailsToStoreIntoTheDB);
 		System.out.println("Saved to DB SUCCESSFULLY");
 	}
-
 }

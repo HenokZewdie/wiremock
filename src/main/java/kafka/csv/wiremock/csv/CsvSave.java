@@ -26,6 +26,7 @@ public class CsvSave {
 	}
 
 	public void readCsvFile() throws IOException {
+		//try with resource...awesome
 		try (Reader reader = newBufferedReader(Paths.get(new ClassPathResource("sample.csv").getFile().toString()))){
 			Iterator<PojoForTheCsvFile> iterator = getIterator(reader);
 			while(iterator.hasNext()){
