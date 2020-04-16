@@ -11,5 +11,10 @@ Download kafka binary from apache and start zookeeper and kafka server.
 .\bin\windows\kafka-server-start.bat .\config\server.properties
 ```
 
+### Persist for testing
+One time run
+```
+Create a person objects and persist in the DB
+```
 ### Contributing
 Pull requests are welcome but Please update the readme file too.

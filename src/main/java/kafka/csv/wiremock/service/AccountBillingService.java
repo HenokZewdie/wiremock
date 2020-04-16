@@ -10,22 +10,25 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 
-@Service
+@Component
 public class AccountBillingService {
 
+	RestTemplate restTemplate = new RestTemplate();
 
-	@Autowired
-	RestTemplate restTemplate;
-	
+	public AccountBillingService(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+
 	public SubscriptionAndUserDetailsToStoreIntoTheDB getUsersDetails() throws JsonParseException, JsonMappingException, IOException{
 		SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB = new SubscriptionAndUserDetailsToStoreIntoTheDB();
-		Users user = new Users();
+		Users user;
 		Gson gson = new Gson();
 		HttpHeaders headers = new HttpHeaders();
 		String url="http://localhost:8089/users/getUserInformation";

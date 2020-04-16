@@ -11,6 +11,7 @@ public class WiremockApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WiremockApplication.class, args);
+
     }
     @Bean
     public RestTemplate restTemplate(){

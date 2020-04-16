@@ -63,6 +63,6 @@ public class KafkaController {
 		System.out.println("Consumed JSON Message $$$$$$$$$$: " +
 				subscriptionAndUserDetailsToStoreIntoTheDB.getUsers().getLimit());
 		mongoTemplate.save(subscriptionAndUserDetailsToStoreIntoTheDB);
-		System.out.println("Saved to DB SUCCESSFULLY");
+		System.out.println("Consumed and Saved to DB SUCCESSFULLY");
 	}
 }
