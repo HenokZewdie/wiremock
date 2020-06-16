@@ -16,8 +16,6 @@ import cucumber.api.junit.Cucumber;
         features = "src/test/java/kafka/csv/wiremock/functionalTesting/feature",
         glue = "stepDefinition",
         strict = true)
-//@EnableConfigurationProperties
-//@ContextConfiguration
 
 public class FunctionalTestWithWiremockRunner {
     private static WireMockServer mockServer;

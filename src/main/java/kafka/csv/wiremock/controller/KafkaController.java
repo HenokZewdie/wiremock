@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import kafka.csv.wiremock.kafka.SubscriptionAndUserDetailsToStoreIntoTheDB;
 import kafka.csv.wiremock.service.AccountBillingService;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,17 +21,13 @@ public class KafkaController {
 	private static final String TOPIC = "GreatExample";
 
 	@Autowired
-	private final KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate;
+	private KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate;
 
 	@Autowired
 	AccountBillingService service;
 
 	@Autowired
 	MongoTemplate mongoTemplate;
-
-	public KafkaController(KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate) {
-		this.kafkaTemplate = kafkaTemplate;
-	}
 
 	@RequestMapping(value = "/getUsersDetails", method = RequestMethod.GET)
 	public SubscriptionAndUserDetailsToStoreIntoTheDB getAllUser() throws JsonParseException, JsonMappingException, IOException {
@@ -58,11 +55,11 @@ public class KafkaController {
 
 	@KafkaListener(topics = TOPIC ,groupId = "group_json",
 			containerFactory = "userKafkaListenerFactory")
-	public void consumeJson(SubscriptionAndUserDetailsToStoreIntoTheDB  subscriptionAndUserDetailsToStoreIntoTheDB)
+	public void consumeJson(ConsumerRecord<String, SubscriptionAndUserDetailsToStoreIntoTheDB>  subscriptionAndUserDetailsToStoreIntoTheDB)
 			throws JsonParseException, JsonMappingException, IOException {
-		System.out.println("Consumed JSON Message $$$$$$$$$$: " +
-				subscriptionAndUserDetailsToStoreIntoTheDB.getUsers().getLimit());
-		mongoTemplate.save(subscriptionAndUserDetailsToStoreIntoTheDB);
+//		System.out.println("Consumed JSON Message $$$$$$$$$$: " +
+//				subscriptionAndUserDetailsToStoreIntoTheDB.getUsers().getLimit());
+		mongoTemplate.save(subscriptionAndUserDetailsToStoreIntoTheDB.value());
 		System.out.println("Consumed and Saved to DB SUCCESSFULLY");
 	}
 }

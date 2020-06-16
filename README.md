@@ -17,4 +17,8 @@ One time run
 Create a person objects and persist in the DB
 ```
 ### Contributing
-Pull requests are welcome but Please update the readme file too.
+Pull requests are welcome but Please update the readme file before. Semtehal
+
+
+
+@Copyright : belew wegegna

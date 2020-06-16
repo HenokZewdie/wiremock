@@ -1,6 +1,7 @@
 package kafka.csv.wiremock.config;
 
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import kafka.csv.wiremock.kafka.SubscriptionAndUserDetailsToStoreIntoTheDB;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -48,8 +49,7 @@ public class KakfaConfiguration {
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "group_id");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(config);
     }
 
@@ -60,7 +60,6 @@ public class KakfaConfiguration {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-
 
     
     @Bean

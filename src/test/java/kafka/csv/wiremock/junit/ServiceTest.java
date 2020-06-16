@@ -20,14 +20,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-
 @RunWith(SpringRunner.class)
 public class ServiceTest {
 
     //Need to properly update the String for both onStarProfileSubscription and User
-    private final String response ="{\"onStarProfileSubscription\": {\"userId\": \"817a2a40-838b-11e8-a14b-115b12bf7517\",\"accountId\": 10,\"accountType\": \"accountType\",\"enrollmentId\": 1},\"users\": {\"size\": 1,\"offset\": 0,\"limit\": 10,\"results\": [{\"userId\": \"817a2a40-838b-11e8-a14b-115b12bf7517\",\"firstName\": \"jane\",\"middleName\": \"janice\",\"lastName\": \"doe\",\"title\": \"ms.\",\"nameSuffix\": \"jr.\",\"phones\": [{\"number\": \"+12345678900\",\"type\": \"HOME\",\"extension\": null},{\"number\": \"+12345678901\",\"type\": \"WORK\",\"extension\": \"1234\"},{\"number\": \"+12345678921\",\"type\": \"MOBILE\",\"extension\": null}],\"emailAddress\": \"sample@gmail.com\",\"preferredLanguage\": \"EN_US\",\"addresses\": [{\"type\": \"HOME\",\"line1\": \"3909 Woodward Ave\",\"line2\": \"Apt 4\",\"city\": \"Detroit\",\"stateOrProvince\": \"MI\",\"country\": \"US\",\"postalCode\": \"48201\"},{\"type\": \"MAILING\",\"line1\": \"3909 Woodward Ave\",\"line2\": \"Apt 4\",\"city\": \"Detroit\",\"stateOrProvince\": \"MI\",\"country\": \"US\",\"postalCode\": \"48201\"}],\"gcin\": null}]}}";
+    private final String response = "{\"onStarProfileSubscription\": {\"userId\": \"817a2a40-838b-11e8-a14b-115b12bf7517\",\"accountId\": 10,\"accountType\": \"accountType\",\"enrollmentId\": 1},\"users\": {\"size\": 1,\"offset\": 0,\"limit\": 10,\"results\": [{\"userId\": \"817a2a40-838b-11e8-a14b-115b12bf7517\",\"firstName\": \"jane\",\"middleName\": \"janice\",\"lastName\": \"doe\",\"title\": \"ms.\",\"nameSuffix\": \"jr.\",\"phones\": [{\"number\": \"+12345678900\",\"type\": \"HOME\",\"extension\": null},{\"number\": \"+12345678901\",\"type\": \"WORK\",\"extension\": \"1234\"},{\"number\": \"+12345678921\",\"type\": \"MOBILE\",\"extension\": null}],\"emailAddress\": \"sample@gmail.com\",\"preferredLanguage\": \"EN_US\",\"addresses\": [{\"type\": \"HOME\",\"line1\": \"3909 Woodward Ave\",\"line2\": \"Apt 4\",\"city\": \"Detroit\",\"stateOrProvince\": \"MI\",\"country\": \"US\",\"postalCode\": \"48201\"},{\"type\": \"MAILING\",\"line1\": \"3909 Woodward Ave\",\"line2\": \"Apt 4\",\"city\": \"Detroit\",\"stateOrProvince\": \"MI\",\"country\": \"US\",\"postalCode\": \"48201\"}],\"gcin\": null}]}}";
     @Mock
     RestTemplate restTemplate;
     @InjectMocks
@@ -35,7 +32,7 @@ public class ServiceTest {
 
     @Before
     public void setup() {
-        billingService = new AccountBillingService(restTemplate);
+        billingService = new AccountBillingService();
         WiremockConfig.setup();
     }
 

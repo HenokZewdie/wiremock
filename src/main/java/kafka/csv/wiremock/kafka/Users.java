@@ -1,14 +1,19 @@
 package kafka.csv.wiremock.kafka;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import gherkin.deps.com.google.gson.annotations.SerializedName;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "Users_Collection")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Users {
     @SerializedName("size")
     private Long size = null;
@@ -19,8 +24,9 @@ public class Users {
     @SerializedName("limit")
     private Long limit = null;
 
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     @SerializedName("results")
-    private List<User> results = new ArrayList<User>();
+    private List<User> results;
 
     public Long getSize() {
         return size;

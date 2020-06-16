@@ -22,10 +22,6 @@ public class AccountBillingService {
 
 	RestTemplate restTemplate = new RestTemplate();
 
-	public AccountBillingService(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}
-
 	public SubscriptionAndUserDetailsToStoreIntoTheDB getUsersDetails() throws JsonParseException, JsonMappingException, IOException{
 		SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB = new SubscriptionAndUserDetailsToStoreIntoTheDB();
 		Users user;
