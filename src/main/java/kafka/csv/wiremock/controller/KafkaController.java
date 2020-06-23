@@ -7,6 +7,8 @@ import kafka.csv.wiremock.service.AccountBillingService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class KafkaController {
@@ -29,37 +32,46 @@ public class KafkaController {
 	@Autowired
 	MongoTemplate mongoTemplate;
 
+	public KafkaController(KafkaTemplate<String, SubscriptionAndUserDetailsToStoreIntoTheDB> kafkaTemplate) {
+		this.kafkaTemplate = kafkaTemplate;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
 	@RequestMapping(value = "/getUsersDetails", method = RequestMethod.GET)
-	public SubscriptionAndUserDetailsToStoreIntoTheDB getAllUser() throws JsonParseException, JsonMappingException, IOException {
+	public SubscriptionAndUserDetailsToStoreIntoTheDB getAllUser() {
 		SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB = null;
-		String response = "ERROR on STORING TO THE DB";
 		try {
 			detailsToStoreIntoTheDB = service.getUsersDetails();
-			response = "Successfully stored in the DB";
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage() + "Will create a ControllerAdvice for this");
 		}
 
 		post(detailsToStoreIntoTheDB);
 		return detailsToStoreIntoTheDB;
 	}
 
-	//TODO ... instead of calling the api, pass the SubscriptionAndUserDetailsToStoreIntoTheDB to this method to publish
-	//@RequestMapping(value = "/publish", method = RequestMethod.GET)
-	public void  post(SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB) throws JsonParseException, JsonMappingException, IOException {
-		//No need to use the next line if SubscriptionAndUserDetailsToStoreIntoTheDB is passed
-		//SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB = service.getUsersDetails(userId);
-		kafkaTemplate.send(TOPIC, detailsToStoreIntoTheDB);
-		//return detailsToStoreIntoTheDB;
+	/**
+	 * This method publish an event "UserDetailEvent" in the TOPIC of SubscriptionAndUserDetailsToStoreIntoTheDB object
+	 * @param detailsToStoreIntoTheDB
+	 */
+	public void  post(SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB) {
+		kafkaTemplate.send(TOPIC, "UserDetailEvent", detailsToStoreIntoTheDB);
 	}
 
 	@KafkaListener(topics = TOPIC ,groupId = "group_json",
 			containerFactory = "userKafkaListenerFactory")
-	public void consumeJson(ConsumerRecord<String, SubscriptionAndUserDetailsToStoreIntoTheDB>  subscriptionAndUserDetailsToStoreIntoTheDB)
+	public void consumeJson(ConsumerRecord<String, SubscriptionAndUserDetailsToStoreIntoTheDB>
+										subscriptionAndUserDetailsToStoreIntoTheDB)
 			throws JsonParseException, JsonMappingException, IOException {
-//		System.out.println("Consumed JSON Message $$$$$$$$$$: " +
-//				subscriptionAndUserDetailsToStoreIntoTheDB.getUsers().getLimit());
-		mongoTemplate.save(subscriptionAndUserDetailsToStoreIntoTheDB.value());
-		System.out.println("Consumed and Saved to DB SUCCESSFULLY");
+		if(subscriptionAndUserDetailsToStoreIntoTheDB.key().equalsIgnoreCase("EventNames")){
+			mongoTemplate.save(subscriptionAndUserDetailsToStoreIntoTheDB.value());
+			List<SubscriptionAndUserDetailsToStoreIntoTheDB> newTest =
+					mongoTemplate.find(new Query(Criteria.where("id").is(0)),
+							SubscriptionAndUserDetailsToStoreIntoTheDB.class);
+			System.out.println("Consumed and Saved to DB SUCCESSFULLY");
+		}
 	}
 }

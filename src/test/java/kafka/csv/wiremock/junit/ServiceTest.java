@@ -43,7 +43,7 @@ public class ServiceTest {
         //Mockito.when(restTemplate.exchange(anyString(), HttpMethod.GET, any(), String.class)).thenReturn(buildResponse());
         SubscriptionAndUserDetailsToStoreIntoTheDB serviceResponse = billingService.getUsersDetails();
         Assert.assertNotNull(serviceResponse);
-        Assert.assertNotNull(serviceResponse.getUsers());
+        Assert.assertNotNull(serviceResponse);
     }
 
     private ResponseEntity<String> buildResponse() {
