@@ -41,7 +41,7 @@ public class PersonStepDef {
     public void a_person() throws Throwable {
         restTemplate = new RestTemplate();
         CsvEntity csvEntity = wiremockTestAndConvertToClass();
-        assertEquals(6, csvEntity.getAge());
+        assertEquals(8, csvEntity.getAge());
     }
 
     @When("^the api is invoked$")

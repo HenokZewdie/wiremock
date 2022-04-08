@@ -9,6 +9,9 @@ Download kafka binary from apache and start zookeeper and kafka server.
 ```bat
 .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
 .\bin\windows\kafka-server-start.bat .\config\server.properties
+
+Use sh for mac
+sh kafka-server-start.sh ../config/server.properties
 ```
 
 ### Persist for testing

@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class KafkaController {
 	 * @return
 	 */
 	@RequestMapping(value = "/getUsersDetails", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.CREATED)
 	public SubscriptionAndUserDetailsToStoreIntoTheDB getAllUser() {
 		SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB = null;
 		try {
@@ -58,6 +61,7 @@ public class KafkaController {
 	 * @param detailsToStoreIntoTheDB
 	 */
 	public void  post(SubscriptionAndUserDetailsToStoreIntoTheDB detailsToStoreIntoTheDB) {
+
 		kafkaTemplate.send(TOPIC, "UserDetailEvent", detailsToStoreIntoTheDB);
 	}
 
